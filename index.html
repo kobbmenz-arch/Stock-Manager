@@ -5,11 +5,11 @@
 <meta name="theme-color" content="#0b5c7a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Stock Manager">
+<meta name="apple-mobile-web-app-title" content="Easy Count">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<title>Stock Manager — Offline Inventory</title>
+<title>Easy Count — Offline Inventory</title>
 <style>
 :root{--bg:#eef1f4;--card:#fff;--ink:#14202b;--mut:#5d6b78;--line:#d5dce3;--acc:#1f5eff;--ok:#1e7a4f;--warn:#b86e00;--bad:#c0362c;--chip:#e4e9ef}
 @media(prefers-color-scheme:dark){:root{--bg:#0f161d;--card:#18222c;--ink:#e8edf2;--mut:#93a1ae;--line:#2c3947;--acc:#6b95ff;--ok:#4cc38a;--warn:#e8a23a;--bad:#ff7a6e;--chip:#233140}}
@@ -186,7 +186,7 @@ dialog h3{padding-bottom:10px;border-bottom:2px solid var(--acc)}
 @media(max-width:640px){.dh,.dg{grid-template-columns:1fr}.hv{font-size:30px}}
 </style></head><body>
 <header>
- <h1>Stock Manager</h1>
+ <h1>Easy Count</h1>
  <nav id="nav"></nav>
  <div class="bar" style="margin:0" id="acts"></div>
 </header>
@@ -225,7 +225,7 @@ dialog h3{padding-bottom:10px;border-bottom:2px solid var(--acc)}
   <label class="w">Warehouse manager password (4 or more characters)<input id="wp" type="password" placeholder="New warehouse manager password" autocomplete="off"></label>
   <button class="btn w" style="grid-column:1/-1" onclick="setWpin()">Set or change warehouse manager password</button>
   <button class="btn g w" style="grid-column:1/-1" onclick="setWpin(true)">Remove warehouse manager password</button>
-    <label class="w">Business name (shown on printouts)<input id="biz" oninput="S.biz=this.value;save();document.querySelector('header h1').textContent=this.value||'Stock Manager'"></label>
+    <label class="w">Business name (shown on printouts)<input id="biz" oninput="S.biz=this.value;save();document.querySelector('header h1').textContent=this.value||'Easy Count'"></label>
   <label class="w">Currency symbol<input id="cur" maxlength="4" oninput="S.cur=this.value;save();render()"></label>
  </div>
  <div class="act"><button class="btn g" onclick="menu.close()">Close</button></div></dialog>
@@ -254,7 +254,7 @@ const status=i=>i.qty<=0?["out","Out of stock"]:i.qty<=i.reorder?["low","Low"]:[
 let gok=false,mode=S.pin?"":"owner",lrole="staff",lastCust="",salesDay="";
 const iso=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
 const dayStr=()=>(salesDay&&mode!=="staff"?new Date(salesDay+"T00:00"):new Date()).toDateString();
-function doPrint(title,body,cls){$("pa").className=cls||"";$("pa").innerHTML=`<h1 style="font-size:20px;margin:0">${esc(S.biz||"Stock Manager")}</h1><h2 style="font-size:16px;margin:4px 0 12px">${title}</h2>${body}<p style="margin-top:16px;color:#555;font-size:12px">Printed ${when(Date.now())}</p>`;window.print()}
+function doPrint(title,body,cls){$("pa").className=cls||"";$("pa").innerHTML=`<h1 style="font-size:20px;margin:0">${esc(S.biz||"Easy Count")}</h1><h2 style="font-size:16px;margin:4px 0 12px">${title}</h2>${body}<p style="margin-top:16px;color:#555;font-size:12px">Printed ${when(Date.now())}</p>`;window.print()}
 window.onafterprint=()=>{$("pa").innerHTML="";$("pa").className=""};
 const hs=t=>{let a=3735928559,b=1103547991;t="ps:"+t;for(let i=0;i<t.length;i++){const c=t.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}return(a>>>0).toString(36)+(b>>>0).toString(36)};
 $("nav").onclick=e=>{const t=e.target.dataset.t;if(!t)return;tab=t;render()};
@@ -287,11 +287,11 @@ let me="";
 function setGpin(rm){if(rm){S.gpin="";save();return toast("Shop password removed")}
  if(!S.pin)return toast("Set the owner password first");const v=$("gp").value;if(v.length<4)return toast("Use at least 4 characters");
  S.gpin=hs(v);$("gp").value="";save();toast("Shop password saved. It is asked before every login")}
-function shopView(){$("v").innerHTML=`<div class="sg"><div class="sgc"><div class="sgk">&#128274;</div><h2>${esc(S.biz||"Stock Manager")}</h2><p>This shop is locked. Enter the shop password.</p>
+function shopView(){$("v").innerHTML=`<div class="sg"><div class="sgc"><div class="sgk">&#128274;</div><h2>${esc(S.biz||"Easy Count")}</h2><p>This shop is locked. Enter the shop password.</p>
  <input id="lp" type="password" autocomplete="off" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')shopLogin()"><button class="btn" onclick="shopLogin()">Unlock</button><small>Next you will sign in with your own name and password.</small></div></div>`;$("lp").focus()}
 function shopLogin(){if(hs($("lp").value)!==S.gpin)return toast("Wrong shop password");gok=true;loginView()}
 function loginView(){if(S.gpin&&!gok)return shopView();const UL=(S.users||[]).filter(u=>u.role===lrole),need=lrole!=="staff"||!!S.spin||UL.length>0,D={owner:["Owner","Full access to everything"],accountant:["Accountant","Sales, credit, movements and stock in"],warehouse:["Warehouse manager","Give stock out to customers"],staff:["Sales personnel","Record sales and credit sales"]};
- $("v").innerHTML=`<div class="lg"><div class="lgl"><div class="lgm">&#128241;</div><div class="lgt">${esc(S.biz||"Stock Manager")}</div><p>Inventory, sales and credit in one place.</p></div>
+ $("v").innerHTML=`<div class="lg"><div class="lgl"><div class="lgm">&#128241;</div><div class="lgt">${esc(S.biz||"Easy Count")}</div><p>Inventory, sales and credit in one place.</p></div>
  <div class="lgr"><h2>Sign in</h2><p class="lgs">Choose your role to continue</p>
  <div class="rl">${["staff","warehouse","accountant","owner"].map(r=>`<button class="${r===lrole?"on":""}" onclick="pickRole('${r}')"><b>${D[r][0]}</b><span>${D[r][1]}</span></button>`).join("")}</div>
  ${UL.length?`<label class="lgf">Your name<select id="lu">${UL.map(u=>`<option value="${u.id}">${esc(u.name)}</option>`).join("")}</select></label>`:""}
@@ -309,7 +309,7 @@ function lock(){mode="";gok=false;me="";cart=[];cartPay="";render();toast("Logge
 function setPin(rm){if(rm){S.pin="";S.mpin="";S.spin="";S.wpin="";S.gpin="";save();render();return toast("Owner password removed. The login screen is off")}
  const v=$("np").value;if(v.length<4)return toast("Use at least 4 characters");S.pin=hs(v);$("np").value="";save();render();toast("Owner password saved. Click Log out to see the login screen")}
 
-function render(){applyMode();renderUsers();$("cur").value=S.cur||"";$("biz").value=S.biz||"";document.documentElement.dataset.theme="tally";document.querySelector("header h1").textContent=S.biz||"Stock Manager";(mode?{dash,inv,log,sales,credit,issue}[tab]:loginView)()}
+function render(){applyMode();renderUsers();$("cur").value=S.cur||"";$("biz").value=S.biz||"";document.documentElement.dataset.theme="tally";document.querySelector("header h1").textContent=S.biz||"Easy Count";(mode?{dash,inv,log,sales,credit,issue}[tab]:loginView)()}
 
 const PAL=["#0b5c7a","#e0a100","#2e8b57","#b00020","#6b4fa0","#e07a1f","#5a7684"];
 function dash(){

@@ -1,4 +1,4 @@
-STOCK MANAGER: HOW TO PUT IT ON YOUR LAPTOPS AND PHONES
+EASY COUNT: HOW TO PUT IT ON YOUR LAPTOPS AND PHONES
 =========================================================
 
 What you have
@@ -43,7 +43,7 @@ ANDROID PHONE (Chrome)
   1. Open your address in Chrome.
   2. Tap the "Install app on this device" button at the bottom of the screen, or open
      the Chrome menu (three dots) and choose "Install app" or "Add to Home screen".
-  3. Tap Install. The Stock Manager icon appears on your home screen.
+  3. Tap Install. The Easy Count icon appears on your home screen.
 
 IPHONE OR IPAD (must be Safari)
   1. Open your address in Safari.

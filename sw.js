@@ -1,6 +1,6 @@
-/* Stock Manager service worker: keeps the app working with no internet.
+/* Easy Count service worker: keeps the app working with no internet.
    The app page itself updates automatically when you upload a new version. Change the version number below only if you change the icons or add new files. */
-const V = "stock-manager-v2";
+const V = "easy-count-v3";
 const CORE = ["./", "index.html", "manifest.webmanifest",
   "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png",
   "icons/apple-touch-icon.png", "icons/favicon-32.png"];

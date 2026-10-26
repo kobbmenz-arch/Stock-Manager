@@ -1,6 +1,6 @@
 {
-  "name": "Stock Manager",
-  "short_name": "Stock Manager",
+  "name": "Easy Count",
+  "short_name": "Easy Count",
   "description": "Offline inventory, sales and credit for your shop.",
   "id": "./",
   "start_url": "./index.html",
